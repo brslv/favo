@@ -1,0 +1,7 @@
+<h1>Bookmarks list:</h1>
+<ul *ngIf="bookmarks.length">
+  <li *ngFor="let bookmark of bookmarks">
+    <h4>{{bookmark.title}}</h4>
+    <a href="{{bookmark.link}}">{{bookmark.link}}</a>
+  </li>
+</ul>
