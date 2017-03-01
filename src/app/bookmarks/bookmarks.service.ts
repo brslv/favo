@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BookmarkModel } from './bookmark.model';
-import { WhereClauseContract } from '../contracts/where-clause.contract';
+import { WhereCriteriaContract } from '../contracts/where-criteria.contract';
 
 @Injectable()
 export class BookmarksService {
@@ -14,7 +14,7 @@ export class BookmarksService {
     return this.bookmarks;
   }
 
-  get(where: WhereClauseContract): Array<BookmarkModel> {
+  get(where: WhereCriteriaContract): Array<BookmarkModel> {
     const matchedBookmarks: BookmarkModel[] = [];
     const engine: string = where.engine;
     delete where.engine;
@@ -36,8 +36,6 @@ export class BookmarksService {
           matches[clause] = currentBookmark[clause] === clauseValue;
         }
       }
-      
-      console.log(matches);
       
       let fullfillsTheCondition;
       if (engine === 'and') {

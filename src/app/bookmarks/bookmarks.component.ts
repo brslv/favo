@@ -14,9 +14,9 @@ export class BookmarksComponent {
     this.bookmarks = bookmarksService.getAll();
 
     let result = this.bookmarksService.get({
-      engine: 'and', // the condition on object (whereClause) level
+      engine: 'or', // the condition on object (whereClause) level
       id: [1,2],
-      weight: [10,20], // on the array level the condition is OR
+      weight: [10,30], // on the array level the condition is OR
     });
 
     console.log(result);

@@ -16,9 +16,9 @@ var BookmarksComponent = (function () {
         this.bookmarks = [];
         this.bookmarks = bookmarksService.getAll();
         var result = this.bookmarksService.get({
-            engine: 'and',
+            engine: 'or',
             id: [1, 2],
-            weight: [10, 20],
+            weight: [10, 30],
         });
         console.log(result);
     }

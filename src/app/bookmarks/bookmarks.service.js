@@ -41,7 +41,6 @@ var BookmarksService = (function () {
                     matches[clause] = currentBookmark[clause] === clauseValue;
                 }
             }
-            console.log(matches);
             var fullfillsTheCondition;
             if (engine === 'and') {
                 var everythingMatches = true;
