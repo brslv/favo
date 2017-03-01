@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BookmarkModel } from './bookmark.model';
+import { BookmarksService } from './bookmarks.service';
 
 @Component({
   moduleId: module.id,
@@ -7,11 +8,17 @@ import { BookmarkModel } from './bookmark.model';
   templateUrl: './bookmarks.component.html'
 })
 export class BookmarksComponent {
-  bookmarks: BookmarkModel[] = [
-    new BookmarkModel(1, 'Google', 'http://google.com', 'The most advanced search engine out there...', 10),
-    new BookmarkModel(1, 'Yahoo', 'http://yahoo.com', 'A pretty decent search engine', 20),
-    new BookmarkModel(1, 'Bing', 'http://bing.com', 'Meeeh...', 30),
-  ];
+  bookmarks: BookmarkModel[] = [];
 
-  constructor() {}
+  constructor(public bookmarksService: BookmarksService) {
+    this.bookmarks = bookmarksService.getAll();
+
+    let result = this.bookmarksService.get({
+      engine: 'and', // the condition on object (whereClause) level
+      id: [1,2],
+      weight: [10,20], // on the array level the condition is OR
+    });
+
+    console.log(result);
+  }
 }

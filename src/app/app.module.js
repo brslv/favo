@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var app_component_1 = require('./app.component');
 var bookmarks_component_1 = require('./bookmarks/bookmarks.component');
+var bookmarks_service_1 = require('./bookmarks/bookmarks.service');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -22,7 +23,10 @@ var AppModule = (function () {
                 app_component_1.AppComponent,
                 bookmarks_component_1.BookmarksComponent
             ],
-            bootstrap: [app_component_1.AppComponent]
+            bootstrap: [app_component_1.AppComponent],
+            providers: [
+                bookmarks_service_1.BookmarksService
+            ]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);

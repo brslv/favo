@@ -9,14 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var bookmark_model_1 = require('./bookmark.model');
+var bookmarks_service_1 = require('./bookmarks.service');
 var BookmarksComponent = (function () {
-    function BookmarksComponent() {
-        this.bookmarks = [
-            new bookmark_model_1.BookmarkModel(1, 'Google', 'http://google.com', 'The most advanced search engine out there...', 10),
-            new bookmark_model_1.BookmarkModel(1, 'Yahoo', 'http://yahoo.com', 'A pretty decent search engine', 20),
-            new bookmark_model_1.BookmarkModel(1, 'Bing', 'http://bing.com', 'Meeeh...', 30),
-        ];
+    function BookmarksComponent(bookmarksService) {
+        this.bookmarksService = bookmarksService;
+        this.bookmarks = [];
+        this.bookmarks = bookmarksService.getAll();
+        var result = this.bookmarksService.get({
+            engine: 'and',
+            id: [1, 2],
+            weight: [10, 20],
+        });
+        console.log(result);
     }
     BookmarksComponent = __decorate([
         core_1.Component({
@@ -24,7 +28,7 @@ var BookmarksComponent = (function () {
             selector: 'fv-bookmarks',
             templateUrl: './bookmarks.component.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [bookmarks_service_1.BookmarksService])
     ], BookmarksComponent);
     return BookmarksComponent;
 }());
