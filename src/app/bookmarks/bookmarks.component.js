@@ -15,18 +15,15 @@ var BookmarksComponent = (function () {
         this.bookmarksService = bookmarksService;
         this.bookmarks = [];
         this.bookmarks = bookmarksService.getAll();
-        var result = this.bookmarksService.get({
-            engine: 'or',
-            id: [1, 2],
-            weight: [10, 30],
-        });
-        console.log(result);
     }
+    BookmarksComponent.prototype.showDetails = function (bookmark) {
+        this.selectedBookmark = bookmark;
+    };
     BookmarksComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
             selector: 'fv-bookmarks',
-            templateUrl: './bookmarks.component.html'
+            templateUrl: './bookmarks.component.html',
         }), 
         __metadata('design:paramtypes', [bookmarks_service_1.BookmarksService])
     ], BookmarksComponent);

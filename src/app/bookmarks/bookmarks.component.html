@@ -1,7 +1,17 @@
-<h1>Bookmarks list:</h1>
-<ul *ngIf="bookmarks.length">
-  <li *ngFor="let bookmark of bookmarks">
-    <h4>{{bookmark.title}}</h4>
-    <a href="{{bookmark.link}}">{{bookmark.link}}</a>
-  </li>
-</ul>
+<div class="container">
+  <div class="list-group" *ngIf="bookmarks.length">
+    <a href="javascript:;" class="list-group-item list-group-item-action flex-column align-items-start " *ngFor="let bookmark of bookmarks" (click)="showDetails(bookmark)">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{bookmark.title}}</h5>
+      </div>
+      <small>{{bookmark.link}}</small>
+    </a>
+  </div>
+  <br /><br />
+  <div class="details" *ngIf="selectedBookmark">
+    <h1>Bookmark details</h1>
+    <input type="text" [(ngModel)]="selectedBookmark.title" />
+    <div class="description">{{selectedBookmark.title}}</div>
+    <a href="{{selectedBookmark.link}}">{{selectedBookmark.link}}</a>
+  </div>
+</div>
