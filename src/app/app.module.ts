@@ -9,6 +9,8 @@ import { HomeComponent }           from './home/home.component';
 import { BookmarksComponent }      from './bookmarks/bookmarks.component';
 import { BookmarkDetailComponent } from './bookmarks/bookmark-detail.component';
 import { BookmarkAddFormComponent} from './bookmarks/bookmark-add-form.component';
+import { StorageAdapterContract }  from './contracts/storage-adapter.contract';
+import { LocalStorageAdapterService } from './storage/adapters/local-storage-adapter.service';
 
 import { BookmarksService }        from './bookmarks/bookmarks.service';
 
@@ -27,7 +29,8 @@ import { BookmarksService }        from './bookmarks/bookmarks.service';
   ],
   bootstrap:    [ AppComponent ],
   providers: [
-    BookmarksService
+    BookmarksService,
+    [{provide: 'StorageAdapter', useClass: LocalStorageAdapterService }]
   ]
 })
 export class AppModule { }

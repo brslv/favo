@@ -17,6 +17,7 @@ var home_component_1 = require('./home/home.component');
 var bookmarks_component_1 = require('./bookmarks/bookmarks.component');
 var bookmark_detail_component_1 = require('./bookmarks/bookmark-detail.component');
 var bookmark_add_form_component_1 = require('./bookmarks/bookmark-add-form.component');
+var local_storage_adapter_service_1 = require('./storage/adapters/local-storage-adapter.service');
 var bookmarks_service_1 = require('./bookmarks/bookmarks.service');
 var AppModule = (function () {
     function AppModule() {
@@ -37,7 +38,8 @@ var AppModule = (function () {
             ],
             bootstrap: [app_component_1.AppComponent],
             providers: [
-                bookmarks_service_1.BookmarksService
+                bookmarks_service_1.BookmarksService,
+                [{ provide: 'StorageAdapter', useClass: local_storage_adapter_service_1.LocalStorageAdapterService }]
             ]
         }), 
         __metadata('design:paramtypes', [])

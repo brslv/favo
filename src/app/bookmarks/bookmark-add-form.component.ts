@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BookmarksFormAwareContract } from '../contracts/bookmarks-form-aware.contract';
+import { StorageService } from '../storage/storage.service';
 
 @Component({
   moduleId: module.id,
   selector: 'fv-bookmark-add-form',
-  templateUrl: './bookmarks-form.html'
+  templateUrl: './bookmarks-form.html',
+  providers: [ StorageService ]
 })
 export class BookmarkAddFormComponent implements BookmarksFormAwareContract {
   public bookmark: Object;
   public title: string;
 
-  constructor() {
+  constructor(public storageService: StorageService) {
     this.bookmark = {};
     this.title = "Add new bookmark";
   }
@@ -21,7 +23,6 @@ export class BookmarkAddFormComponent implements BookmarksFormAwareContract {
   }
 
   addBookmark(form: NgForm) {
-    console.log('adding new bookmark');
-    console.log(form); // @TODO: should I pass the entire form in here?
+    this.storageService.add({});
   }
 }
