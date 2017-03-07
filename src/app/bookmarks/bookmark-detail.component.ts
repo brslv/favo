@@ -7,16 +7,18 @@ import 'rxjs/add/operator/switchMap';
 
 @Component({
   moduleId: module.id,
-  selector: 'bookmark-detail',
-  templateUrl: './bookmark-detail.component.html',
+  selector: 'fv-bookmark-detail',
+  templateUrl: './bookmarks-form.html',
 })
 export class BookmarkDetailComponent implements OnInit {
   @Input()
   public bookmark: BookmarkModel;
+  public title: string;
 
   constructor(
     private route: ActivatedRoute,
-    private bookmarksService: BookmarksService) { }
+    private bookmarksService: BookmarksService) {
+    }
 
   public ngOnInit(): void {
     this.route.params
@@ -26,7 +28,14 @@ export class BookmarkDetailComponent implements OnInit {
         id: +params['id']
       })
     })
-    .subscribe(bookmark => this.bookmark = bookmark);
+    .subscribe(bookmark => {
+      this.bookmark = bookmark
+      this.title = `Edit bookmark: ${this.bookmark.title}`;
+    });
+  }
+
+  public onFormSubmit(): void {
+    this.update();
   }
 
   public update(): void {

@@ -27,7 +27,13 @@ var BookmarkDetailComponent = (function () {
                 id: +params['id']
             });
         })
-            .subscribe(function (bookmark) { return _this.bookmark = bookmark; });
+            .subscribe(function (bookmark) {
+            _this.bookmark = bookmark;
+            _this.title = "Edit bookmark: " + _this.bookmark.title;
+        });
+    };
+    BookmarkDetailComponent.prototype.onFormSubmit = function () {
+        this.update();
     };
     BookmarkDetailComponent.prototype.update = function () {
         console.log('updating bookmark...');
@@ -39,8 +45,8 @@ var BookmarkDetailComponent = (function () {
     BookmarkDetailComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'bookmark-detail',
-            templateUrl: './bookmark-detail.component.html',
+            selector: 'fv-bookmark-detail',
+            templateUrl: './bookmarks-form.html',
         }), 
         __metadata('design:paramtypes', [router_1.ActivatedRoute, bookmarks_service_1.BookmarksService])
     ], BookmarkDetailComponent);

@@ -11,7 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var BookmarkAddFormComponent = (function () {
     function BookmarkAddFormComponent() {
+        this.bookmark = {};
+        this.title = "Add new bookmark";
     }
+    BookmarkAddFormComponent.prototype.onFormSubmit = function (form) {
+        this.addBookmark(form);
+    };
     BookmarkAddFormComponent.prototype.addBookmark = function (form) {
         console.log('adding new bookmark');
         console.log(form); // @TODO: should I pass the entire form in here?
@@ -20,7 +25,7 @@ var BookmarkAddFormComponent = (function () {
         core_1.Component({
             moduleId: module.id,
             selector: 'fv-bookmark-add-form',
-            templateUrl: './bookmark-add-form.component.html'
+            templateUrl: './bookmarks-form.html'
         }), 
         __metadata('design:paramtypes', [])
     ], BookmarkAddFormComponent);
