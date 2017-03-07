@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { BookmarkModel } from './bookmark.model';
 import { BookmarksService } from './bookmarks.service';
+import { BookmarksFormAwareContract } from '../contracts/bookmarks-form-aware.contract';
+import { NgForm } from '@angular/forms';
 
 import 'rxjs/add/operator/switchMap';
 
@@ -10,7 +12,7 @@ import 'rxjs/add/operator/switchMap';
   selector: 'fv-bookmark-detail',
   templateUrl: './bookmarks-form.html',
 })
-export class BookmarkDetailComponent implements OnInit {
+export class BookmarkDetailComponent implements OnInit, BookmarksFormAwareContract {
   @Input()
   public bookmark: BookmarkModel;
   public title: string;
@@ -34,7 +36,7 @@ export class BookmarkDetailComponent implements OnInit {
     });
   }
 
-  public onFormSubmit(): void {
+  public onFormSubmit(form: NgForm): void {
     this.update();
   }
 

@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { BookmarksFormAwareContract } from '../contracts/bookmarks-form-aware.contract';
 
 @Component({
   moduleId: module.id,
   selector: 'fv-bookmark-add-form',
   templateUrl: './bookmarks-form.html'
 })
-export class BookmarkAddFormComponent {
+export class BookmarkAddFormComponent implements BookmarksFormAwareContract {
   public bookmark: Object;
   public title: string;
 
@@ -15,7 +16,7 @@ export class BookmarkAddFormComponent {
     this.title = "Add new bookmark";
   }
 
-  onFormSubmit(form: NgForm) {
+  onFormSubmit(form: NgForm): void {
     this.addBookmark(form);
   }
 

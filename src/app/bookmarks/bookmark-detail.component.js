@@ -32,7 +32,7 @@ var BookmarkDetailComponent = (function () {
             _this.title = "Edit bookmark: " + _this.bookmark.title;
         });
     };
-    BookmarkDetailComponent.prototype.onFormSubmit = function () {
+    BookmarkDetailComponent.prototype.onFormSubmit = function (form) {
         this.update();
     };
     BookmarkDetailComponent.prototype.update = function () {
