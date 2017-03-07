@@ -1,4 +1,9 @@
 <div class="container">
+  <h1>Add new bookmark</h1>
+  <a [routerLink]="['/bookmarks']">Bookmarks list</a>
+
+  <hr />
+
   <form class="form" (ngSubmit)="addBookmark(bookmarkAddForm)" #bookmarkAddForm="ngForm">
     <div class="form-group">
       <label for="title">Title:</label>

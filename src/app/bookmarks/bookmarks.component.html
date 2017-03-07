@@ -1,11 +1,16 @@
 <div class="container">
+  <h1>Your bookmarks</h1>
+
+  <hr />
+
   <div class="list-group" *ngIf="bookmarks.length">
-    <a href="javascript:;" class="list-group-item list-group-item-action flex-column align-items-start " *ngFor="let bookmark of bookmarks" (click)="showDetails(bookmark)">
+    <div class="list-group-item list-group-item-action flex-column align-items-start " *ngFor="let bookmark of bookmarks">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">{{bookmark.title}}</h5>
       </div>
-      <small>{{bookmark.link}}</small>
-    </a>
+      <small><a href="{{bookmark.link}}" target="_blank">{{bookmark.link}}</a></small>
+      <small><a [routerLink]="['/bookmarks', bookmark.id]">Edit</a></small>
+    </div>
   </div>
   <br /><br />
   <div class="details" *ngIf="selectedBookmark">

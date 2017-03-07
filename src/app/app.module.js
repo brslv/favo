@@ -15,6 +15,7 @@ var app_routing_module_1 = require('./routing/app-routing.module');
 var app_component_1 = require('./app.component');
 var home_component_1 = require('./home/home.component');
 var bookmarks_component_1 = require('./bookmarks/bookmarks.component');
+var bookmark_detail_component_1 = require('./bookmarks/bookmark-detail.component');
 var bookmark_add_form_component_1 = require('./bookmarks/bookmark-add-form.component');
 var bookmarks_service_1 = require('./bookmarks/bookmarks.service');
 var AppModule = (function () {
@@ -31,6 +32,7 @@ var AppModule = (function () {
                 app_component_1.AppComponent,
                 home_component_1.HomeComponent,
                 bookmarks_component_1.BookmarksComponent,
+                bookmark_detail_component_1.BookmarkDetailComponent,
                 bookmark_add_form_component_1.BookmarkAddFormComponent,
             ],
             bootstrap: [app_component_1.AppComponent],
