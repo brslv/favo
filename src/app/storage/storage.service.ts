@@ -6,7 +6,7 @@ export class StorageService {
   constructor(
     @Inject('StorageAdapter') public storageAdapter: StorageAdapterContract) { }
 
-  add(data: Object): void {
-    this.storageAdapter.add(data);
+  add(data: any, key: string): void {
+    this.storageAdapter.add(data, key);
   }
 }

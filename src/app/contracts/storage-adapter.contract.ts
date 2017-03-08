@@ -1,5 +1,5 @@
 export interface StorageAdapterContract {
-  add(data: Object): void;
-  edit(id: number, data: Object): void;
-  delete(id: number): void;
+  add(data: any, key: string): void;
+  edit(id: number, data: any, key: string): void;
+  delete(data: any, key: string): void;
 }

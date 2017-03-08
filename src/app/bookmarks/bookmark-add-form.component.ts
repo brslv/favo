@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BookmarksFormAwareContract } from '../contracts/bookmarks-form-aware.contract';
 import { StorageService } from '../storage/storage.service';
+import storageKeys from '../storage/storage-keys';
 
 @Component({
   moduleId: module.id,
@@ -23,6 +24,6 @@ export class BookmarkAddFormComponent implements BookmarksFormAwareContract {
   }
 
   addBookmark(form: NgForm) {
-    this.storageService.add({});
+    this.storageService.add(this.bookmark, storageKeys.BOOKMARKS);
   }
 }

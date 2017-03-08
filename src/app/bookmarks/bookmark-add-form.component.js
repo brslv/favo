@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var storage_service_1 = require('../storage/storage.service');
+var storage_keys_1 = require('../storage/storage-keys');
 var BookmarkAddFormComponent = (function () {
     function BookmarkAddFormComponent(storageService) {
         this.storageService = storageService;
@@ -20,7 +21,7 @@ var BookmarkAddFormComponent = (function () {
         this.addBookmark(form);
     };
     BookmarkAddFormComponent.prototype.addBookmark = function (form) {
-        this.storageService.add({});
+        this.storageService.add(this.bookmark, storage_keys_1.default.BOOKMARKS);
     };
     BookmarkAddFormComponent = __decorate([
         core_1.Component({
