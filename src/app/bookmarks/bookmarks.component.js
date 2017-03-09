@@ -14,7 +14,7 @@ var BookmarksComponent = (function () {
     function BookmarksComponent(bookmarksService) {
         this.bookmarksService = bookmarksService;
         this.bookmarks = [];
-        this.bookmarks = bookmarksService.getAll();
+        this.bookmarks = bookmarksService.getAll().reverse();
     }
     BookmarksComponent.prototype.showDetails = function (bookmark) {
         this.selectedBookmark = bookmark;

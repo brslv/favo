@@ -12,7 +12,7 @@ export class BookmarksComponent {
   selectedBookmark: BookmarkModel;
 
   constructor(public bookmarksService: BookmarksService) {
-    this.bookmarks = bookmarksService.getAll();
+    this.bookmarks = bookmarksService.getAll().reverse();
   }
 
   showDetails(bookmark: BookmarkModel): void {
