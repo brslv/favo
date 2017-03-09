@@ -19,6 +19,9 @@ var StorageService = (function () {
     StorageService.prototype.add = function (data, key) {
         this.storageAdapter.add(data, key);
     };
+    StorageService.prototype.get = function (key) {
+        return this.storageAdapter.get(key);
+    };
     StorageService = __decorate([
         core_1.Injectable(),
         __param(0, core_1.Inject('StorageAdapter')), 

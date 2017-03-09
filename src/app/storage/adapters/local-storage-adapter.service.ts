@@ -15,15 +15,17 @@ export class LocalStorageAdapterService implements StorageAdapterContract {
     return unj(localStorage.getItem(key))[this.UNIQUE_ID_SIGNIFIER];
   }
   
-  add(data: any, key: string): void {
+  add(data: any, key: string): Object {
     if (!this.keyExists(key)) {
       data = this.injectNewId(data, key);
       localStorage.setItem(key, j([data]));
+      return BookmarkModel.factory(data);
     } else {
       const existing: [any] = this.get(key);
       const newItem = this.injectNewId(data, key);
       existing.push(newItem);
       localStorage.setItem(key, j(existing));
+      return BookmarkModel.factory(data);
     }
   }
 

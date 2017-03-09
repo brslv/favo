@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var json_util_1 = require('../../utils/json.util');
+var bookmark_model_1 = require('../../bookmarks/bookmark.model');
 var LocalStorageAdapterService = (function () {
     function LocalStorageAdapterService() {
         this.UNIQUE_ID_SIGNIFIER = '_id';
@@ -24,12 +25,14 @@ var LocalStorageAdapterService = (function () {
         if (!this.keyExists(key)) {
             data = this.injectNewId(data, key);
             localStorage.setItem(key, json_util_1.j([data]));
+            return bookmark_model_1.BookmarkModel.factory(data);
         }
         else {
             var existing = this.get(key);
             var newItem = this.injectNewId(data, key);
             existing.push(newItem);
             localStorage.setItem(key, json_util_1.j(existing));
+            return bookmark_model_1.BookmarkModel.factory(data);
         }
     };
     LocalStorageAdapterService.prototype.edit = function (id, data, key) {

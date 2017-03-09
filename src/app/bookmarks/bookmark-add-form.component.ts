@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BookmarksFormAwareContract } from '../contracts/bookmarks-form-aware.contract';
 import { StorageService } from '../storage/storage.service';
+import { BookmarksService } from '../bookmarks/bookmarks.service';
+import { BookmarkModel } from '../bookmarks/bookmark.model';
 import storageKeys from '../storage/storage-keys';
 
 @Component({
@@ -14,7 +16,7 @@ export class BookmarkAddFormComponent implements BookmarksFormAwareContract {
   public bookmark: Object;
   public title: string;
 
-  constructor(public storageService: StorageService) {
+  constructor(private bookmarksService: BookmarksService) {
     this.bookmark = {};
     this.title = "Add new bookmark";
   }
@@ -24,6 +26,6 @@ export class BookmarkAddFormComponent implements BookmarksFormAwareContract {
   }
 
   addBookmark(form: NgForm) {
-    this.storageService.add(this.bookmark, storageKeys.BOOKMARKS);
+    this.bookmarksService.add(BookmarkModel.factory(this.bookmark));
   }
 }

@@ -1,14 +1,31 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { BookmarkModel } from './bookmark.model';
 import { WhereCriteriaContract } from '../contracts/where-criteria.contract';
+import { StorageAdapterContract } from '../contracts/storage-adapter.contract';
+import storageKeys from '../storage/storage-keys';
 
 @Injectable()
 export class BookmarksService {
-  bookmarks: BookmarkModel[] = [
-    new BookmarkModel(1, 'Google', 'http://google.com', 'The most advanced search engine out there...', 10),
-    new BookmarkModel(2, 'Yahoo', 'http://yahoo.com', 'A pretty decent search engine', 20),
-    new BookmarkModel(3, 'Bing', 'http://bing.com', 'Meeeh...', 30),
-  ]
+  bookmarks: BookmarkModel[] = [];
+  
+  constructor(
+    @Inject('StorageAdapter') private storageAdapter: StorageAdapterContract) {
+      this.init();
+  }
+  
+  init(): void {
+    const bookmarks = this.storageAdapter.get(storageKeys.BOOKMARKS);
+
+    bookmarks.forEach(item => {
+      this.bookmarks.push(BookmarkModel.factory(item));
+    });
+  }
+
+  add(bookmark: BookmarkModel): void {
+    this.bookmarks.push(
+      this.storageAdapter.add(bookmark, storageKeys.BOOKMARKS)
+    );
+  }
   
   getAll() {
     return this.bookmarks;

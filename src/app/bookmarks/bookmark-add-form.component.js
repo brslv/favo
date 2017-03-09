@@ -10,10 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var storage_service_1 = require('../storage/storage.service');
-var storage_keys_1 = require('../storage/storage-keys');
+var bookmarks_service_1 = require('../bookmarks/bookmarks.service');
+var bookmark_model_1 = require('../bookmarks/bookmark.model');
 var BookmarkAddFormComponent = (function () {
-    function BookmarkAddFormComponent(storageService) {
-        this.storageService = storageService;
+    function BookmarkAddFormComponent(bookmarksService) {
+        this.bookmarksService = bookmarksService;
         this.bookmark = {};
         this.title = "Add new bookmark";
     }
@@ -21,7 +22,7 @@ var BookmarkAddFormComponent = (function () {
         this.addBookmark(form);
     };
     BookmarkAddFormComponent.prototype.addBookmark = function (form) {
-        this.storageService.add(this.bookmark, storage_keys_1.default.BOOKMARKS);
+        this.bookmarksService.add(bookmark_model_1.BookmarkModel.factory(this.bookmark));
     };
     BookmarkAddFormComponent = __decorate([
         core_1.Component({
@@ -30,7 +31,7 @@ var BookmarkAddFormComponent = (function () {
             templateUrl: './bookmarks-form.html',
             providers: [storage_service_1.StorageService]
         }), 
-        __metadata('design:paramtypes', [storage_service_1.StorageService])
+        __metadata('design:paramtypes', [bookmarks_service_1.BookmarksService])
     ], BookmarkAddFormComponent);
     return BookmarkAddFormComponent;
 }());

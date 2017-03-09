@@ -9,4 +9,8 @@ export class StorageService {
   add(data: any, key: string): void {
     this.storageAdapter.add(data, key);
   }
+
+  get(key: string): any[] {
+    return this.storageAdapter.get(key);
+  }
 }
