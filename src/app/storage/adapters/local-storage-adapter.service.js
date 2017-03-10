@@ -16,59 +16,85 @@ var LocalStorageAdapterService = (function () {
         this.UNIQUE_ID_SIGNIFIER = '_id';
     }
     LocalStorageAdapterService.prototype.get = function (key, id) {
-        if (!id) {
-            return json_util_1.unj(localStorage.getItem(key));
-        }
-        return json_util_1.unj(localStorage.getItem(key))[this.UNIQUE_ID_SIGNIFIER];
+        var _this = this;
+        var promise = new Promise(function (resolve, reject) {
+            if (!id) {
+                resolve(json_util_1.unj(localStorage.getItem(key)));
+                return;
+            }
+            resolve(json_util_1.unj(localStorage.getItem(key))[_this.UNIQUE_ID_SIGNIFIER]);
+        });
+        return promise;
     };
     LocalStorageAdapterService.prototype.add = function (data, key) {
-        if (!this.keyExists(key)) {
-            data = this.injectNewId(data, key);
-            localStorage.setItem(key, json_util_1.j([data]));
-            return bookmark_model_1.BookmarkModel.factory(data);
-        }
-        else {
-            var existing = this.get(key);
-            var newItem = this.injectNewId(data, key);
-            existing.push(newItem);
-            localStorage.setItem(key, json_util_1.j(existing));
-            return bookmark_model_1.BookmarkModel.factory(data);
-        }
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            if (!_this.keyExists(key)) {
+                _this.injectNewId(data, key)
+                    .then(function (data) {
+                    localStorage.setItem(key, json_util_1.j([data]));
+                    resolve(bookmark_model_1.BookmarkModel.factory(data));
+                });
+            }
+            else {
+                _this.get(key)
+                    .then(function (existing) {
+                    var newItem = _this.injectNewId(data, key)
+                        .then(function (data) {
+                        existing.push(newItem);
+                        localStorage.setItem(key, json_util_1.j(existing));
+                        resolve(bookmark_model_1.BookmarkModel.factory(data));
+                    });
+                });
+            }
+        });
     };
     LocalStorageAdapterService.prototype.edit = function (id, data, key) {
-        console.log('edits a record from local storage');
+        return Promise.resolve('edits a record from local storage');
     };
     LocalStorageAdapterService.prototype.delete = function (data, key) {
         var _this = this;
-        var bookmarks = this.get(key);
-        console.log(bookmarks);
-        if (bookmarks) {
-            bookmarks = bookmarks.filter(function (b) {
-                return b[_this.UNIQUE_ID_SIGNIFIER] !== data.id;
+        return new Promise(function (resolve, reject) {
+            _this.get(key).then(function (bookmarks) {
+                if (bookmarks) {
+                    bookmarks = bookmarks.filter(function (b) {
+                        return b[_this.UNIQUE_ID_SIGNIFIER] !== data.id;
+                    });
+                }
+                localStorage.setItem(key, json_util_1.j(bookmarks));
+                resolve(bookmarks);
             });
-        }
-        console.log(bookmarks);
-        localStorage.setItem(key, json_util_1.j(bookmarks));
+        });
     };
     LocalStorageAdapterService.prototype.keyExists = function (key) {
         return localStorage.getItem(key);
     };
     LocalStorageAdapterService.prototype.injectNewId = function (data, key) {
-        if (!(data instanceof Object)) {
-            data = {
-                '_': data // use a default key '_'
-            };
-        }
-        data[this.UNIQUE_ID_SIGNIFIER] = this.generateId(key);
-        return data;
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            if (!(data instanceof Object)) {
+                data = {
+                    '_': data // use a default key '_'
+                };
+            }
+            _this.generateId(key).then(function (id) {
+                data[_this.UNIQUE_ID_SIGNIFIER] = id;
+                resolve(data);
+            });
+        });
     };
     LocalStorageAdapterService.prototype.generateId = function (key) {
-        if (!this.keyExists(key)) {
-            return 1;
-        }
-        var existing = this.get(key);
-        var biggestId = this.getBiggestId(existing);
-        return biggestId + 1;
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            if (!_this.keyExists(key)) {
+                resolve(1);
+                return;
+            }
+            _this.get(key).then(function (existing) {
+                var biggestId = _this.getBiggestId(existing);
+                resolve(biggestId + 1);
+            });
+        });
     };
     LocalStorageAdapterService.prototype.getBiggestId = function (existing) {
         var _this = this;

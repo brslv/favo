@@ -14,19 +14,21 @@ export class BookmarksService {
   }
 
   init(): void {
-    const bookmarks = this.storageAdapter.get(storageKeys.BOOKMARKS);
-
-    if (bookmarks) {
-      bookmarks.forEach(item => {
-        this.bookmarks.push(BookmarkModel.factory(item));
-      });
-    }
+    this.storageAdapter.get(storageKeys.BOOKMARKS).then(bookmarks => {
+      if (bookmarks) {
+        bookmarks.forEach((item: BookmarkModel) => {
+          this.bookmarks.push(BookmarkModel.factory(item));
+        });
+      }
+    });
   }
 
   add(bookmark: BookmarkModel): void {
-    this.bookmarks.push(
-      this.storageAdapter.add(bookmark, storageKeys.BOOKMARKS)
-    );
+    this.storageAdapter
+      .add(bookmark, storageKeys.BOOKMARKS)
+      .then((bookmark: BookmarkModel) => {
+        this.bookmarks.push( bookmark );
+      })
   }
 
   getAll() {

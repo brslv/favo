@@ -1,6 +1,6 @@
 export interface StorageAdapterContract {
-  get(key: string, id?: number): any[];
-  add(data: any, key: string): any;
-  edit(id: number, data: any, key: string): void;
-  delete(data: any, key: string): void;
+  get(key: string, id?: number): Promise<any>;
+  add(data: any, key: string): Promise<any>;
+  edit(id: number, data: any, key: string): Promise<any>;
+  delete(data: any, key: string): Promise<any>;
 }

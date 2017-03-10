@@ -7,75 +7,96 @@ import { BookmarkModel } from '../../bookmarks/bookmark.model';
 export class LocalStorageAdapterService implements StorageAdapterContract {
   private UNIQUE_ID_SIGNIFIER = '_id';
 
-  get(key: string, id?: number) {
-    if (!id) {
-      return unj(localStorage.getItem(key));
-    }
+  get(key: string, id?: number): Promise<any> {
+    const promise = new Promise((resolve, reject) => {
+      if (!id) {
+        resolve(unj(localStorage.getItem(key)));
+        return;
+      }
 
-    return unj(localStorage.getItem(key))[this.UNIQUE_ID_SIGNIFIER];
+      resolve(unj(localStorage.getItem(key))[this.UNIQUE_ID_SIGNIFIER]);
+    });
+
+    return promise;
   }
 
-  add(data: any, key: string): Object {
-    if (!this.keyExists(key)) {
-      data = this.injectNewId(data, key);
-      localStorage.setItem(key, j([data]));
-      return BookmarkModel.factory(data);
-    } else {
-      const existing: [any] = this.get(key);
-      const newItem = this.injectNewId(data, key);
-      existing.push(newItem);
-      localStorage.setItem(key, j(existing));
-      return BookmarkModel.factory(data);
-    }
+  add(data: any, key: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (!this.keyExists(key)) {
+        this.injectNewId(data, key)
+          .then(data => {
+            localStorage.setItem(key, j([data]));
+            resolve(BookmarkModel.factory(data));
+          });
+      } else {
+        this.get(key)
+          .then(existing => {
+            const newItem = this.injectNewId(data, key)
+              .then(data => {
+                existing.push(newItem);
+                localStorage.setItem(key, j(existing));
+                resolve(BookmarkModel.factory(data));
+              });
+          });
+      }
+    });
   }
 
-  edit(id: number, data: any, key: string): void {
-    console.log('edits a record from local storage');
+  edit(id: number, data: any, key: string): Promise<any> {
+    return Promise.resolve('edits a record from local storage');
   }
 
-  delete(data: any, key: string): void {
-    let bookmarks: BookmarkModel[] = this.get(key);
-    console.log(bookmarks);
+  delete(data: any, key: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.get(key).then((bookmarks: BookmarkModel[]) => {
+        if (bookmarks) {
+          bookmarks = bookmarks.filter(b => {
+            return b[this.UNIQUE_ID_SIGNIFIER] !== data.id;
+          });
+        }
 
-    if (bookmarks) {
-      bookmarks = bookmarks.filter(b => {
-        return b[this.UNIQUE_ID_SIGNIFIER] !== data.id;
+        localStorage.setItem(key, j(bookmarks));
+
+        resolve(bookmarks);
       });
-    }
-
-    console.log(bookmarks);
-
-    localStorage.setItem(key, j(bookmarks));
+    });
   }
 
   private keyExists(key: string) {
     return localStorage.getItem(key);
   }
 
-  private injectNewId(data: Object, key: string): Object {
-    if (!(data instanceof Object)) {
-      data = {
-        '_': data // use a default key '_'
+  private injectNewId(data: Object, key: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (!(data instanceof Object)) {
+        data = {
+          '_': data // use a default key '_'
+        }
       }
-    }
 
-    data[this.UNIQUE_ID_SIGNIFIER] = this.generateId(key);
+      this.generateId(key).then(id => {
+        data[this.UNIQUE_ID_SIGNIFIER] = id
 
-    return data;
+        resolve(data);
+      });
+    });
   }
 
-  private generateId(key: string): number {
-    if (!this.keyExists(key)) {
-      return 1;
-    }
+  private generateId(key: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      if (!this.keyExists(key)) {
+        resolve(1);
+        return;
+      }
 
-    const existing: [any] = this.get(key);
-    const biggestId: number = this.getBiggestId(existing);
-
-    return biggestId + 1;
+      this.get(key).then((existing: any[]) => {
+        const biggestId: number = this.getBiggestId(existing);
+        resolve(biggestId + 1);
+      });
+    });
   }
 
-  private getBiggestId(existing: [any]): number {
+  private getBiggestId(existing: any[]): number {
     let biggestId: number = 1;
 
     existing.forEach(item => {
