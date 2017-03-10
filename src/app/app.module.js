@@ -17,6 +17,8 @@ var home_component_1 = require('./home/home.component');
 var bookmarks_component_1 = require('./bookmarks/bookmarks.component');
 var bookmark_detail_component_1 = require('./bookmarks/bookmark-detail.component');
 var bookmark_add_form_component_1 = require('./bookmarks/bookmark-add-form.component');
+var modal_component_1 = require('./messages/modal.component');
+var alert_component_1 = require('./messages/alert.component');
 var local_storage_adapter_service_1 = require('./storage/adapters/local-storage-adapter.service');
 var bookmarks_service_1 = require('./bookmarks/bookmarks.service');
 var AppModule = (function () {
@@ -35,6 +37,8 @@ var AppModule = (function () {
                 bookmarks_component_1.BookmarksComponent,
                 bookmark_detail_component_1.BookmarkDetailComponent,
                 bookmark_add_form_component_1.BookmarkAddFormComponent,
+                modal_component_1.ModalComponent,
+                alert_component_1.AlertComponent,
             ],
             bootstrap: [app_component_1.AppComponent],
             providers: [

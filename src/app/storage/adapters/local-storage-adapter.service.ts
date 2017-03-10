@@ -6,7 +6,7 @@ import { BookmarkModel } from '../../bookmarks/bookmark.model';
 @Injectable()
 export class LocalStorageAdapterService implements StorageAdapterContract {
   private UNIQUE_ID_SIGNIFIER = '_id';
-  
+
   get(key: string, id?: number) {
     if (!id) {
       return unj(localStorage.getItem(key));
@@ -14,7 +14,7 @@ export class LocalStorageAdapterService implements StorageAdapterContract {
 
     return unj(localStorage.getItem(key))[this.UNIQUE_ID_SIGNIFIER];
   }
-  
+
   add(data: any, key: string): Object {
     if (!this.keyExists(key)) {
       data = this.injectNewId(data, key);
@@ -34,7 +34,18 @@ export class LocalStorageAdapterService implements StorageAdapterContract {
   }
 
   delete(data: any, key: string): void {
-    console.log('deletes a record from local storage');
+    let bookmarks: BookmarkModel[] = this.get(key);
+    console.log(bookmarks);
+
+    if (bookmarks) {
+      bookmarks = bookmarks.filter(b => {
+        return b[this.UNIQUE_ID_SIGNIFIER] !== data.id;
+      });
+    }
+
+    console.log(bookmarks);
+
+    localStorage.setItem(key, j(bookmarks));
   }
 
   private keyExists(key: string) {
@@ -49,7 +60,7 @@ export class LocalStorageAdapterService implements StorageAdapterContract {
     }
 
     data[this.UNIQUE_ID_SIGNIFIER] = this.generateId(key);
-    
+
     return data;
   }
 

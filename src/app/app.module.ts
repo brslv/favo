@@ -9,6 +9,8 @@ import { HomeComponent }           from './home/home.component';
 import { BookmarksComponent }      from './bookmarks/bookmarks.component';
 import { BookmarkDetailComponent } from './bookmarks/bookmark-detail.component';
 import { BookmarkAddFormComponent} from './bookmarks/bookmark-add-form.component';
+import { ModalComponent }          from './messages/modal.component';
+import { AlertComponent }          from './messages/alert.component';
 import { StorageAdapterContract }  from './contracts/storage-adapter.contract';
 import { LocalStorageAdapterService } from './storage/adapters/local-storage-adapter.service';
 
@@ -26,6 +28,8 @@ import { BookmarksService }        from './bookmarks/bookmarks.service';
     BookmarksComponent,
     BookmarkDetailComponent,
     BookmarkAddFormComponent,
+    ModalComponent,
+    AlertComponent,
   ],
   bootstrap:    [ AppComponent ],
   providers: [

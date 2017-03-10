@@ -39,7 +39,16 @@ var LocalStorageAdapterService = (function () {
         console.log('edits a record from local storage');
     };
     LocalStorageAdapterService.prototype.delete = function (data, key) {
-        console.log('deletes a record from local storage');
+        var _this = this;
+        var bookmarks = this.get(key);
+        console.log(bookmarks);
+        if (bookmarks) {
+            bookmarks = bookmarks.filter(function (b) {
+                return b[_this.UNIQUE_ID_SIGNIFIER] !== data.id;
+            });
+        }
+        console.log(bookmarks);
+        localStorage.setItem(key, json_util_1.j(bookmarks));
     };
     LocalStorageAdapterService.prototype.keyExists = function (key) {
         return localStorage.getItem(key);

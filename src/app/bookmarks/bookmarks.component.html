@@ -10,6 +10,7 @@
       </div>
       <small><a href="{{bookmark.link}}" target="_blank">{{bookmark.link}}</a></small>
       <small><a [routerLink]="['/bookmarks', bookmark.id]">Edit</a></small>
+      <small><a href="javascript:;" (click)="delete(bookmark)">Delete</a></small>
     </div>
   </div>
   <br /><br />

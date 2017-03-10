@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var storage_service_1 = require('../storage/storage.service');
 var bookmarks_service_1 = require('../bookmarks/bookmarks.service');
 var bookmark_model_1 = require('../bookmarks/bookmark.model');
+var alert_model_1 = require('../messages/alert.model');
 var BookmarkAddFormComponent = (function () {
     function BookmarkAddFormComponent(bookmarksService) {
         this.bookmarksService = bookmarksService;
@@ -20,6 +21,11 @@ var BookmarkAddFormComponent = (function () {
     }
     BookmarkAddFormComponent.prototype.onFormSubmit = function (form) {
         this.addBookmark(form);
+        form.reset();
+        this.displayMessage();
+    };
+    BookmarkAddFormComponent.prototype.displayMessage = function () {
+        this.alert = new alert_model_1.AlertModel('OK, we saved it...', alert_model_1.AlertModel.TYPE_SUCCESS);
     };
     BookmarkAddFormComponent.prototype.addBookmark = function (form) {
         this.bookmarksService.add(bookmark_model_1.BookmarkModel.factory(this.bookmark));

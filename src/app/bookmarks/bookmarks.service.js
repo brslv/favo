@@ -23,9 +23,11 @@ var BookmarksService = (function () {
     BookmarksService.prototype.init = function () {
         var _this = this;
         var bookmarks = this.storageAdapter.get(storage_keys_1.default.BOOKMARKS);
-        bookmarks.forEach(function (item) {
-            _this.bookmarks.push(bookmark_model_1.BookmarkModel.factory(item));
-        });
+        if (bookmarks) {
+            bookmarks.forEach(function (item) {
+                _this.bookmarks.push(bookmark_model_1.BookmarkModel.factory(item));
+            });
+        }
     };
     BookmarksService.prototype.add = function (bookmark) {
         this.bookmarks.push(this.storageAdapter.add(bookmark, storage_keys_1.default.BOOKMARKS));
@@ -73,6 +75,12 @@ var BookmarksService = (function () {
                 fullfillsTheCondition = atLeastOneMatches;
             }
             return fullfillsTheCondition;
+        });
+    };
+    BookmarksService.prototype.remove = function (bookmark) {
+        this.storageAdapter.delete({ id: bookmark.id }, storage_keys_1.default.BOOKMARKS);
+        this.bookmarks = this.bookmarks.filter(function (b) {
+            return b.id !== bookmark.id;
         });
     };
     BookmarksService = __decorate([

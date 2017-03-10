@@ -4,7 +4,9 @@ import { BookmarksFormAwareContract } from '../contracts/bookmarks-form-aware.co
 import { StorageService } from '../storage/storage.service';
 import { BookmarksService } from '../bookmarks/bookmarks.service';
 import { BookmarkModel } from '../bookmarks/bookmark.model';
+import { AlertModel } from '../messages/alert.model';
 import storageKeys from '../storage/storage-keys';
+declare var $:any;
 
 @Component({
   moduleId: module.id,
@@ -15,6 +17,7 @@ import storageKeys from '../storage/storage-keys';
 export class BookmarkAddFormComponent implements BookmarksFormAwareContract {
   public bookmark: Object;
   public title: string;
+  public alert: AlertModel;
 
   constructor(private bookmarksService: BookmarksService) {
     this.bookmark = {};
@@ -23,6 +26,12 @@ export class BookmarkAddFormComponent implements BookmarksFormAwareContract {
 
   onFormSubmit(form: NgForm): void {
     this.addBookmark(form);
+    form.reset();
+    this.displayMessage();
+  }
+
+  displayMessage() {
+    this.alert = new AlertModel('OK, we saved it...', AlertModel.TYPE_SUCCESS);
   }
 
   addBookmark(form: NgForm) {

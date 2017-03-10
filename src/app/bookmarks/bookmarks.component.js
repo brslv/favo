@@ -19,6 +19,10 @@ var BookmarksComponent = (function () {
     BookmarksComponent.prototype.showDetails = function (bookmark) {
         this.selectedBookmark = bookmark;
     };
+    BookmarksComponent.prototype.delete = function (bookmark) {
+        this.bookmarksService.remove(bookmark);
+        this.bookmarks = this.bookmarksService.getAll();
+    };
     BookmarksComponent = __decorate([
         core_1.Component({
             moduleId: module.id,

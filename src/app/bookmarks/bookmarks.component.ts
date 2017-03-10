@@ -18,4 +18,9 @@ export class BookmarksComponent {
   showDetails(bookmark: BookmarkModel): void {
     this.selectedBookmark = bookmark;
   }
+
+  delete(bookmark: BookmarkModel): void {
+    this.bookmarksService.remove(bookmark);
+    this.bookmarks = this.bookmarksService.getAll();
+  }
 }

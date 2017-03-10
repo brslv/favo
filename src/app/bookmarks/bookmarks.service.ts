@@ -7,18 +7,20 @@ import storageKeys from '../storage/storage-keys';
 @Injectable()
 export class BookmarksService {
   bookmarks: BookmarkModel[] = [];
-  
+
   constructor(
     @Inject('StorageAdapter') private storageAdapter: StorageAdapterContract) {
       this.init();
   }
-  
+
   init(): void {
     const bookmarks = this.storageAdapter.get(storageKeys.BOOKMARKS);
 
-    bookmarks.forEach(item => {
-      this.bookmarks.push(BookmarkModel.factory(item));
-    });
+    if (bookmarks) {
+      bookmarks.forEach(item => {
+        this.bookmarks.push(BookmarkModel.factory(item));
+      });
+    }
   }
 
   add(bookmark: BookmarkModel): void {
@@ -26,7 +28,7 @@ export class BookmarksService {
       this.storageAdapter.add(bookmark, storageKeys.BOOKMARKS)
     );
   }
-  
+
   getAll() {
     return this.bookmarks;
   }
@@ -38,7 +40,7 @@ export class BookmarksService {
 
     return this.bookmarks.filter((currentBookmark) => {
       let matches = {};
-      
+
       for (let clause in where) {
         let clauseValue = where[clause];
         matches[clause] = false;
@@ -53,8 +55,8 @@ export class BookmarksService {
           matches[clause] = currentBookmark[clause] === clauseValue;
         }
       }
-      
-      let fullfillsTheCondition;
+
+      let fullfillsTheCondition: boolean;
       if (engine === 'and') {
         let everythingMatches = true;
         for (let match in matches) {
@@ -74,6 +76,13 @@ export class BookmarksService {
       }
 
       return fullfillsTheCondition;
+    });
+  }
+
+  remove(bookmark: BookmarkModel): void {
+    this.storageAdapter.delete({id: bookmark.id}, storageKeys.BOOKMARKS);
+    this.bookmarks = this.bookmarks.filter(b => {
+      return b.id !== bookmark.id;
     });
   }
 }
