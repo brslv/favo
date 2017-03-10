@@ -27,6 +27,7 @@ var BookmarksService = (function () {
                 bookmarks.forEach(function (item) {
                     _this.bookmarks.push(bookmark_model_1.BookmarkModel.factory(item));
                 });
+                _this.bookmarks = _this.bookmarks.reverse();
             }
         });
     };
@@ -35,11 +36,11 @@ var BookmarksService = (function () {
         this.storageAdapter
             .add(bookmark, storage_keys_1.default.BOOKMARKS)
             .then(function (bookmark) {
-            _this.bookmarks.push(bookmark);
+            _this.bookmarks.unshift(bookmark);
         });
     };
     BookmarksService.prototype.getAll = function () {
-        return this.bookmarks;
+        return this.bookmarks.reverse();
     };
     BookmarksService.prototype.get = function (where) {
         var matchedBookmarks = [];

@@ -31,11 +31,11 @@ export class LocalStorageAdapterService implements StorageAdapterContract {
       } else {
         this.get(key)
           .then(existing => {
-            const newItem = this.injectNewId(data, key)
-              .then(data => {
+            this.injectNewId(data, key)
+              .then(newItem => {
                 existing.push(newItem);
                 localStorage.setItem(key, j(existing));
-                resolve(BookmarkModel.factory(data));
+                resolve(BookmarkModel.factory(newItem));
               });
           });
       }

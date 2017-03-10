@@ -39,11 +39,11 @@ var LocalStorageAdapterService = (function () {
             else {
                 _this.get(key)
                     .then(function (existing) {
-                    var newItem = _this.injectNewId(data, key)
-                        .then(function (data) {
+                    _this.injectNewId(data, key)
+                        .then(function (newItem) {
                         existing.push(newItem);
                         localStorage.setItem(key, json_util_1.j(existing));
-                        resolve(bookmark_model_1.BookmarkModel.factory(data));
+                        resolve(bookmark_model_1.BookmarkModel.factory(newItem));
                     });
                 });
             }

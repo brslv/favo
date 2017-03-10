@@ -19,6 +19,7 @@ export class BookmarksService {
         bookmarks.forEach((item: BookmarkModel) => {
           this.bookmarks.push(BookmarkModel.factory(item));
         });
+        this.bookmarks = this.bookmarks.reverse();
       }
     });
   }
@@ -27,12 +28,12 @@ export class BookmarksService {
     this.storageAdapter
       .add(bookmark, storageKeys.BOOKMARKS)
       .then((bookmark: BookmarkModel) => {
-        this.bookmarks.push( bookmark );
+        this.bookmarks.unshift( bookmark );
       })
   }
 
   getAll() {
-    return this.bookmarks;
+    return this.bookmarks.reverse();
   }
 
   get(where: WhereCriteriaContract): Array<BookmarkModel> {
